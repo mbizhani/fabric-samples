@@ -1,7 +1,7 @@
-./network.sh up createChannel -ca -verbose
+./network.sh up createChannel
 
 echo "##########################"
 echo "####### CHAIN CODE #######"
 echo "##########################"
 
-./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript -ccl javascript
+./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go

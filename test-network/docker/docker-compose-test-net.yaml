@@ -74,6 +74,10 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
+      # Misc
+      - CORE_CHAINCODE_BUILDER=${BUILDER_IMAGE}
+      - CORE_CHAINCODE_JAVA_RUNTIME=${JAVA_ENV_IMAGE}
+      - CORE_CHAINCODE_GOLANG_RUNTIME=${BASE_OS_IMAGE}
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - ../organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -112,6 +116,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:9051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
+      # Misc
+      - CORE_CHAINCODE_BUILDER=${BUILDER_IMAGE}
+      - CORE_CHAINCODE_JAVA_RUNTIME=${JAVA_ENV_IMAGE}
+      - CORE_CHAINCODE_GOLANG_RUNTIME=${BASE_OS_IMAGE}
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - ../organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
