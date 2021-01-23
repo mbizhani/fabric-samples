@@ -1,17 +1,14 @@
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-
-ARG GO_VER=1.14.4
-ARG ALPINE_VER=3.12
-
-FROM golang:${GO_VER}-alpine${ALPINE_VER}
-
+FROM golang:1.14.13-alpine3.12 AS build
+LABEL stage=build
 WORKDIR /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
 COPY . .
+ARG GOPROXY=https://proxy.golang.org
+ARG GO111MODULE=on
+RUN echo "Build.GOPROXY=${GOPROXY}" && \
+    go build -o chaincode -v .
 
-RUN go get -d -v ./...
-RUN go install -v ./...
 
+FROM alpine:3.12 AS prod
+COPY --from=build /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external/chaincode /app/chaincode
 EXPOSE 9999
-CMD ["chaincode-external"]
+CMD /app/chaincode

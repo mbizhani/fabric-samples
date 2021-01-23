@@ -41,6 +41,8 @@ type QueryResult struct {
 
 // InitLedger adds a base set of cars to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+	log.Printf("InitLedger()")
+
 	assets := []Asset{
 		{ID: "asset1", Color: "blue", Size: 5, Owner: "Tomoko", AppraisedValue: 300},
 		{ID: "asset2", Color: "red", Size: 5, Owner: "Brad", AppraisedValue: 400},
@@ -60,6 +62,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 		if err != nil {
 			return fmt.Errorf("failed to put to world state: %v", err)
 		}
+		log.Printf("InitLedger: Asset Added [%s]", asset.ID)
 	}
 
 	return nil
@@ -214,6 +217,8 @@ func main() {
 		Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
 	}
 
+	log.Printf("Config: CHAINCODE_ID=[%s] CHAINCODE_SERVER_ADDRESS=[%s]", config.CCID, config.Address)
+
 	chaincode, err := contractapi.NewChaincode(&SmartContract{})
 
 	if err != nil {
@@ -228,6 +233,8 @@ func main() {
 			Disabled: true,
 		},
 	}
+
+	log.Printf("Server Created Successfully!")
 
 	if err := server.Start(); err != nil {
 		log.Panicf("error starting asset-transfer-basic chaincode: %s", err)

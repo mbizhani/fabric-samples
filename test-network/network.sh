@@ -315,6 +315,12 @@ function deployCC() {
 
 # Tear down running network
 function networkDown() {
+
+  ## Just added for chaincode-external!
+  docker stop asset-transfer-basic.org1.example.com || true
+  docker image prune --filter label=stage=build -f || true
+  ##
+
   # stop org3 containers also in addition to org1 and org2, in case we were running sample to add org3
   docker-compose -f $COMPOSE_FILE_BASE -f $COMPOSE_FILE_COUCH -f $COMPOSE_FILE_CA down --volumes --remove-orphans
   docker-compose -f $COMPOSE_FILE_COUCH_ORG3 -f $COMPOSE_FILE_ORG3 down --volumes --remove-orphans
